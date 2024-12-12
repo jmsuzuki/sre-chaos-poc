@@ -34,7 +34,11 @@ helm upgrade --install "${RELEASE_NAME}" "${CHART_NAME}" \
     --namespace "${NAMESPACE}" \
     --create-namespace \
     --version "${CHART_VERSION}" \
-    --set controller.nodeSelector."${NODE_SELECTOR_KEY}"="${NODE_SELECTOR_VALUE}"
+    --set controller.watchNamespace="" \
+    --set controller.nodeSelector."${NODE_SELECTOR_KEY}"="${NODE_SELECTOR_VALUE}" \
+    --set controller.hostPort.enabled=true \
+    --set controller.hostPort.ports.http=8080 \
+    --set controller.hostPort.ports.https=8443
 
 if [ $? -eq 0 ]; then
     echo "Nginx Ingress Controller '${RELEASE_NAME}' (version ${CHART_VERSION}) successfully installed/upgraded in namespace '${NAMESPACE}'."

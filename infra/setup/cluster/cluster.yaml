@@ -15,7 +15,7 @@ networking:
 
 nodes:
 - role: control-plane
-  image: kindest/node:v1.31.2
+  image: kindest/node:v1.30.4
   extraPortMappings:
   - containerPort: 80
     hostPort: 8080
@@ -26,7 +26,7 @@ nodes:
     # TCP is the default
     protocol: TCP
 - role: worker
-  image: kindest/node:v1.31.2
+  image: kindest/node:v1.30.4
   kubeadmConfigPatches:
   - |
     kind: JoinConfiguration
@@ -34,7 +34,7 @@ nodes:
       kubeletExtraArgs:
         node-labels: "sre-chaos-poc/node-pool=platform,ingress-ready=true"
 - role: worker
-  image: kindest/node:v1.31.2
+  image: kindest/node:v1.30.4
   kubeadmConfigPatches:
   - |
     kind: JoinConfiguration
