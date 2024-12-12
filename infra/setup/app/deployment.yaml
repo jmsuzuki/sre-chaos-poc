@@ -24,6 +24,7 @@ spec:
           imagePullPolicy: Never   # useful when loading images into kind cluster... laoding the image results in an error
           ports:
             - containerPort: 3000
+            - containerPort: 9464
           env:
             - name: REDIS_HOST
               value: "redis-headless.sre-challenge-platform"
