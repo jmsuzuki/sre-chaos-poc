@@ -16,6 +16,8 @@ spec:
       labels:
         app: node-app
     spec:
+      nodeSelector:
+        sre-chaos-poc/node-pool: "service"
       containers:
         - name: node-app
           image: sre-chaos-poc:latest
