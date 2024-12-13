@@ -1,6 +1,17 @@
 # sre-chaos-poc
 This project is intended as a local proof of concept  
-for load and chaos testing of a simple api service.  
+for load and chaos testing of a simple api service.
+
+### Assumptions
+1. project is being run from silicon mac
+
+### Project Pre-Requisites
+1. kind 0.25.0 is installed
+2. jq 1.7 is installed
+3. node v22.12.0 is installed 
+4. wrk is installed 
+5. k6 v0.55.0 is installed 
+6. docker desktop is running
 
 ### Endpoints
 The api service has 2 endpoints:  
@@ -8,7 +19,8 @@ The api service has 2 endpoints:
 **/api/v1/health:** cached every 5s while healthy; while unhealthy, this endpoint is refreshed per request until  healthy
 
 ### Load Testing
-run the test/load project to simulate enough _load_ to spin up 3 app workers
+run the test/load project to simulate enough _load_ to spin up 5 node-app workers.
+follow test/load/README.md for detailed information on load testing the node-app
 
 ### High-Level Setup
 1. create kind cluster
