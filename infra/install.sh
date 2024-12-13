@@ -1,4 +1,5 @@
 #!/bin/bash
+set +e
 
 # Get the absolute path of the script
 SCRIPT_PATH=$(realpath "$0")
@@ -11,6 +12,7 @@ bash -c ${PARENT_DIR}/setup/cluster/create_cluster.sh
 bash -c ${PARENT_DIR}/setup/cluster/create_namespace.sh
 bash -c ${PARENT_DIR}/setup/ingress/install_nginx_ingress.sh
 bash -c ${PARENT_DIR}/setup/monitoring/install_metrics_server.sh
-bash -c ${PARENT_DIR}/setup/monitoring/install_prom_stack.sh
 bash -c ${PARENT_DIR}/setup/thirdparty/install_redis.sh
+bash -c ${PARENT_DIR}/setup/monitoring/install_grafana_dashboard.sh
+bash -c ${PARENT_DIR}/setup/monitoring/install_prom_stack.sh
 bash -c ${PARENT_DIR}/setup/welcome.sh
