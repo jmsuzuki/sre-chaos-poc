@@ -29,4 +29,10 @@ kubectl port-forward -n sre-challenge-platform  service/nginx-ingress-nginx-cont
 
 # test service
 curl http://localhost:8080/api/v1/health
+
+# view metrics in prometheus
+kubectl port-forward -n sre-challenge-monitoring   service/prometheus-stack-kube-prom-prometheus 9090:9090
+
+# view dashboard in grafana
+kubectl port-forward -n sre-challenge-monitoring   service/prometheus-stack-grafana 8081:80
 ```
