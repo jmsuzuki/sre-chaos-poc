@@ -39,7 +39,11 @@ helm upgrade --install "${RELEASE_NAME}" "${CHART_NAME}" \
     --set alertmanager.alertmanagerSpec.nodeSelector."${NODE_SELECTOR_KEY}"="${NODE_SELECTOR_VALUE}" \
     --set grafana.nodeSelector."${NODE_SELECTOR_KEY}"="${NODE_SELECTOR_VALUE}" \
     --set kube-state-metrics.nodeSelector."${NODE_SELECTOR_KEY}"="${NODE_SELECTOR_VALUE}" \
-    --set prometheus-node-exporter.nodeSelector."${NODE_SELECTOR_KEY}"="${NODE_SELECTOR_VALUE}"
+    --set prometheus-node-exporter.nodeSelector."${NODE_SELECTOR_KEY}"="${NODE_SELECTOR_VALUE}" \
+    --set prometheus.prometheusSpec.additionalScrapeConfigs[0].job_name='node-app' \
+    --set prometheus.prometheusSpec.additionalScrapeConfigs[0].scrape_interval='5s' \
+    --set prometheus.prometheusSpec.additionalScrapeConfigs[0].metrics_path='/metrics' \
+    --set prometheus.prometheusSpec.additionalScrapeConfigs[0].static_configs[0].targets[0]='node-app.sre-challenge.svc.cluster.local:9464'
 
 if [ $? -eq 0 ]; then
     echo "Prometheus stack '${RELEASE_NAME}' successfully installed/upgraded in namespace '${NAMESPACE}'."

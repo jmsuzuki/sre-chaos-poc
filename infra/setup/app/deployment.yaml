@@ -16,12 +16,15 @@ spec:
       labels:
         app: node-app
     spec:
+      nodeSelector:
+        sre-chaos-poc/node-pool: "service"
       containers:
         - name: node-app
           image: sre-chaos-poc:latest
           imagePullPolicy: Never   # useful when loading images into kind cluster... laoding the image results in an error
           ports:
             - containerPort: 3000
+            - containerPort: 9464
           env:
             - name: REDIS_HOST
               value: "redis-headless.sre-challenge-platform"
@@ -34,3 +37,23 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
+          # Probes Configuration
+          # Ensures the container is fully started before accepting traffic.
+          startupProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 3000
+            initialDelaySeconds: 5   # Time to wait before performing the first probe
+            periodSeconds: 10        # Frequency of the probe
+            failureThreshold: 30     # Fail after 30 unsuccessful probes
+
+          # Checks if the container is ready to serve traffic.
+          # Failures will remove the pod from the service endpoints but won’t restart the container.
+          # This works perfect for the node-app. This endpoint returns healthy when the service recovers
+          readinessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 3000
+            initialDelaySeconds: 10  # Delay before starting readiness checks
+            periodSeconds: 5         # Frequency of the probe
+            failureThreshold: 3      # Fail after 3 unsuccessful probes
