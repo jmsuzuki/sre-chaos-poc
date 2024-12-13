@@ -7,7 +7,7 @@ const redisClient = redis.createClient({
         port: process.env.REDIS_PORT || 6379,
         reconnectStrategy: (retries) => {
             const retryInterval = 1000; // Retry every 1 second
-            const maxRetryTime = 60 * 1000; // Stop retrying after 1 minute
+            const maxRetryTime = 600 * 1000; // Stop retrying after 1 minute
 
             const elapsedTime = retries * retryInterval;
 
