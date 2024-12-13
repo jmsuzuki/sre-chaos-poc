@@ -34,7 +34,8 @@ helm upgrade --install "${RELEASE_NAME}" "${CHART_NAME}" \
     --namespace "${NAMESPACE}" \
     --create-namespace \
     --version "${CHART_VERSION}" \
-    --set nodeSelector."${NODE_SELECTOR_KEY}"="${NODE_SELECTOR_VALUE}"
+    --set nodeSelector."${NODE_SELECTOR_KEY}"="${NODE_SELECTOR_VALUE}" \
+    --set args[0]=--kubelet-insecure-tls
 
 if [ $? -eq 0 ]; then
     echo "Metrics Server '${RELEASE_NAME}' (version ${CHART_VERSION}) successfully installed/upgraded in namespace '${NAMESPACE}'."
